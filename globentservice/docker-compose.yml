@@ -1,0 +1,111 @@
+version: "3"
+services:
+  eureka-server:
+    build: eureka-server/
+    container_name: eureka-server
+    restart: always
+    network_mode: "host"
+    hostname: localhost
+    ports:
+      - "8761:8761"
+
+  api-gateway:
+    build: api-gateway/
+    container_name: api-gateway
+    depends_on:
+      - eureka-server
+    restart: always
+    network_mode: "host"
+    hostname: localhost
+    ports:
+      - "8081:8081"
+
+  config-server:
+    build: config-server/
+    container_name: CONFIG-SERVER
+    restart: always
+    network_mode: "host"
+    hostname: localhost
+    ports:
+      - "8762:8762"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
+  mongodb:
+    image: mongo:5.0.14
+    container_name: mongodb-container
+    network_mode: host
+    hostname: localhost
+    ports:
+      - "27017:27017"
+
+  email-service:
+    build: email-service/
+    container_name: email-service
+    restart: always
+    network_mode: "host"
+    hostname: localhost
+    ports:
+      - "8767:8767"
+
+  payment-service:
+    container_name: payment-service
+    build: payment-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - "8766:8766"
+
+  event-organizer-service:
+    container_name: event-organizer-service
+    build: event-organizer-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - "8764:8764"
+
+  feedback-service:
+    container_name: feedback-service
+    build: feedback-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - "8768:8768"
+
+  participant-service:
+    container_name: participant-service
+    build: participant-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - "8765:8765"
+
+  user-authentication-management:
+    container_name: user-authentication-management
+    build: user-authentication-management/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - "8763:8763"
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    hostname: localhost
+    network_mode: host
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: authDB
+      MYSQL_PASSWORD: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+
+
+

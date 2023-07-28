@@ -1,0 +1,51 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+        - id: payment-service
+          uri: http://localhost:8766
+          predicates:
+            - Path=/api/v1/payment/**
+
+        - id: feedback-service
+          uri: http://localhost:8768
+          predicates:
+            - Path=/feedback/v1/**
+
+        - id: Authentication-Service
+          uri: http://localhost:8763
+          predicates:
+            - Path=/api/auth/**
+
+        - id: event-organizer
+          uri: http://localhost:8764
+          predicates:
+            - Path=/api/v1/**
+
+        - id: email-service
+          uri: http://localhost:8767
+          predicates:
+            - Path=/notification/**
+
+        - id: participant
+          uri: http://localhost:8765
+          predicates:
+            - Path=/participant/v1/**
+
+  config:
+    import: optional:configserver:http://localhost:8888
+eureka:
+  instances:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+
+
