@@ -1,1 +1,3 @@
-# EventManagementSystem
+# EventPro Vision: Microservice-Driven Event Management Solution
+
+The problems of managing an event and how a software solution has been developed to address the challenges. The software is built on a microservice architecture and uses an API gateway to route client requests to specific backend services. All microservices are registered on an Eureka server and the common configuration is hosted on GitHub via a Config server. RabbitMQ is used as a message broker for inter-microservice communication, and Razorpay payment gateway is implemented for smooth transactions. The entire application is containerized using Docker and deployed on AWS through a pipeline and GitLab.
